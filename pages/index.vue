@@ -127,7 +127,7 @@
                         {{ $config.public["siteName"] }}で、投資をもっと楽しく。
                     </p>
                     <div class="mt-7 grid gap-3 w-full sm:inline-flex">
-                        <a class="btn btn-primary gap-2 px-6">
+                        <a class="btn btn-primary gap-2 px-6" to="/dashboard">
                             <Icon name="material-symbols:bar-chart-4-bars" class="h-5 w-5 max-sm:basis-12" />
                             スタートする！
                         </a>
@@ -173,17 +173,17 @@
                             </ul>
                             <p class="text-base-content my-3">さぁ、はじめよう！</p>
                             <div class="card-actions">
-                                <a class="btn btn-primary btn-block gap-3 bg-primary">
+                                <NuxtLink class="btn btn-primary btn-block gap-3 bg-primary" to="/dashboard">
                                     <Icon name="material-symbols:bar-chart-4-bars" class="h-5 w-5 max-sm:basis-12" />
                                     {{ $config.public["siteName"] }}で スタートする！
-                                </a>
+                                </NuxtLink>
                             </div>
                             <div class="divider my-3">もしくは</div>
                             <div class="card-actions">
-                                <a class="btn btn-ghost btn-block gap-3 bg-base-200">
+                                <NuxtLink class="btn btn-ghost btn-block gap-3 bg-base-200" to="/dashboard">
                                     ログイン
                                     <Icon name="material-symbols:chevron-right" class="h-6 w-6" />
-                                </a>
+                                </NuxtLink>
                             </div>
                         </div>
                     </div>
@@ -522,7 +522,7 @@
                                 <!-- End List -->
                             </div>
                             <div class="mt-5">
-                                <button class="btn btn-primary btn-block">このプランを選択</button>
+                                <NuxtLink class="btn btn-primary btn-block" to="/dashboard">このプランを選択</NuxtLink>
                             </div>
                         </div>
                         <!-- End Card -->

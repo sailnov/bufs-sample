@@ -28,11 +28,11 @@
                             <a class="btn btn-ghost text-sm" href="/#features">
                                 機能・特徴
                             </a>
-                            <a class="btn btn-ghost text-sm" href="#">
+                            <a class="btn btn-ghost text-sm" href="/dashboard">
                                 ログイン
                             </a>
                             <div class="pt-3 md:pt-0">
-                                <a class="btn btn-primary px-6 btn-block md:btn-md" href="#">
+                                <a class="btn btn-primary px-6 btn-block md:btn-md" href="/dashboard">
                                     無料登録
                                 </a>
                             </div>
