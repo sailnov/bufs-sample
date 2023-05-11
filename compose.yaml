@@ -4,10 +4,10 @@ services:
     container_name: bufs-frontend
     build:
       context: .
-      dockerfile: ./build/frontend/Dockerfile
+      dockerfile: Dockerfile
     tty: true
     volumes:
-      - ./src/frontend:/app
+      - .:/app
     ports:
       - "3000:3000"
       - 24678:24678
