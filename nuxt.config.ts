@@ -26,8 +26,9 @@ export default defineNuxtConfig({
     headlessui: {
         prefix: '',
     },
+    ssr: false,
     app: {
-        baseURL: '/bufs-sample',
+        baseURL: '/bufs-sample/',
         head: {
             script: [
                 {
