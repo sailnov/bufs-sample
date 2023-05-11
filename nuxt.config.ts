@@ -27,6 +27,7 @@ export default defineNuxtConfig({
         prefix: '',
     },
     app: {
+        baseURL: "/bufs-sample/",
         head: {
             script: [
                 {
