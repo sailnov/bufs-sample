@@ -22,19 +22,19 @@
                     class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow md:block">
                     <div class="overflow-hidden overflow-y-auto max-h-[75vh] scrollbar-y">
                         <div class="flex flex-col gap-x-0 mt-5 md:flex-row md:items-center md:justify-end md:gap-x-4 md:mt-0 md:pl-7">
-                            <a class="btn btn-ghost text-sm" href="/#pricing">
+                            <NuxtLink class="btn btn-ghost text-sm" to="/#pricing">
                                 プラン・価格
-                            </a>
-                            <a class="btn btn-ghost text-sm" href="/#features">
+                            </NuxtLink>
+                            <NuxtLink class="btn btn-ghost text-sm" to="/#features">
                                 機能・特徴
-                            </a>
-                            <a class="btn btn-ghost text-sm" href="/dashboard">
+                            </NuxtLink>
+                            <NuxtLink class="btn btn-ghost text-sm" to="/dashboard">
                                 ログイン
-                            </a>
+                            </NuxtLink>
                             <div class="pt-3 md:pt-0">
-                                <a class="btn btn-primary px-6 btn-block md:btn-md" href="/dashboard">
+                                <NuxtLink class="btn btn-primary px-6 btn-block md:btn-md" to="/dashboard">
                                     無料登録
-                                </a>
+                                </NuxtLink>
                             </div>
                         </div>
                     </div>
