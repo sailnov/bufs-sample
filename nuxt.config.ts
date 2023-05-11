@@ -1,6 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-    rootDir: "bufs-sample",
     modules: [
         '@nuxtjs/tailwindcss',
         '@nuxtjs/google-fonts',
@@ -28,6 +27,7 @@ export default defineNuxtConfig({
         prefix: '',
     },
     app: {
+        baseURL: '/bufs-sample',
         head: {
             script: [
                 {
