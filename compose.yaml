@@ -1,0 +1,16 @@
+version: "3"
+services:
+  bufs-frontend:
+    container_name: bufs-frontend
+    build:
+      context: .
+      dockerfile: ./build/frontend/Dockerfile
+    tty: true
+    volumes:
+      - ./src/frontend:/app
+    ports:
+      - "3000:3000"
+      - 24678:24678
+    env_file:
+      - .env
+    command: npm run dev
