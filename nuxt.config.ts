@@ -28,8 +28,6 @@ export default defineNuxtConfig({
     },
     ssr: false,
     app: {
-        baseURL: '/bufs-sample/',
-        cdnURL: '/bufs-sample/',
         head: {
             script: [
                 {
