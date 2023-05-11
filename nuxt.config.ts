@@ -26,7 +26,6 @@ export default defineNuxtConfig({
     headlessui: {
         prefix: '',
     },
-    ssr: false,
     app: {
         head: {
             script: [

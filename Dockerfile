@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-COPY src/frontend/package*.json ./
+COPY package*.json ./
 
 RUN npm install
 
