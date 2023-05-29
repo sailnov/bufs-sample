@@ -8,9 +8,9 @@
             </label>
         </div>
     </div>
-    <div class="antialiased bg-gray-50 dark:bg-gray-900 drawer drawer-mobile">
+    <div class="bg-gray-50 dark:bg-gray-900 drawer drawer-mobile">
         <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-        <aside class="fixed drawer-side h-screen dark:bg-gray-800 dark:border-gray-700" aria-label="Sidenav" id="drawer-navigation">
+        <aside class="drawer-side dark:bg-gray-800 dark:border-gray-700" aria-label="Sidenav" id="drawer-navigation">
             <label for="my-drawer" class="drawer-overlay w-full"></label>
             <div class="overflow-y-auto py-5 px-3 h-full w-full bg-white">
                 <ul class="menu menu-compact lg:menu-normal w-56 p-2 rounded-box">
@@ -19,6 +19,9 @@
                     </li>
                     <li>
                         <NuxtLink to="/dashboard" :class="{ active: $route.path === '/dashboard' }"> 銘柄検索 </NuxtLink>
+                    </li>
+                    <li>
+                        <NuxtLink to="/dashboard/grid" :class="{ active: $route.path === '/dashboard/grid' }"> 銘柄検索2 </NuxtLink>
                     </li>
                     <div class="divider"></div>
                     <li class="menu-title text-sm">
@@ -33,7 +36,7 @@
                 </ul>
             </div>
         </aside>
-        <main class="p-4 md:ml-64 h-auto drawer-content">
+        <main class="p-4  drawer-content">
             <slot />
         </main>
     </div>
