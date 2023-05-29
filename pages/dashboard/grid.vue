@@ -665,13 +665,27 @@
     const filterResult = computed(() => {
         return useOrderBy(marketCaps.value, orderBy.value, order.value);
     });
+
+    const selected = ref({});
+    selected.value = marketCaps.value[0];
+    const select = (cap) => {
+        selected.value = cap;
+    };
 </script>
 
 <template>
     <div class="mx-auto">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <div class="">
-                <div class="card bg-base-100 mb-3" v-for="cap in marketCaps" :key="cap.id">
+            <div class="max-h-[100vh] overflow-y-scroll">
+                <select class="select w-full mb-3">
+                    <option disabled selected>ソート</option>
+                    <option>前日終値</option>
+                    <option>利益変動</option>
+                    <option>CANSLIMスコア</option>
+                </select>
+                <div :class="'card mb-3 cursor-pointer ' + (
+                    selected.id === cap.id ? 'bg-base-200' : 'bg-base-100'
+                    )" v-for="cap in marketCaps" :key="cap.id" @click="select(cap)">
                     <div class="card-body p-3">
                         <div class="card-title justify-between">
                             <div class="">
@@ -712,7 +726,7 @@
                 </p>
                 <div class="flex gap-3 mb-1">
                     <h1 class="text-2xl font-semibold">
-                        {{  marketCaps[0].name }}
+                        {{  selected.name }}
                     </h1>
                     <button class="btn btn-primary btn-sm rounded-2xl flex gap-1">
                         <Icon name="mdi:plus" class="h-6 w-6" />
@@ -721,21 +735,21 @@
                 </div>
                 <div class="flex gap-3 align-end items-end mb-3">
                     <h3 class="text-3xl font-semibold">
-                        {{ priceFormat(marketCaps[0].price) }}
+                        {{ priceFormat(selected.price) }}
                     </h3>
                     <p
                         :class="
                             'font-semibold text-sm' +
-                            (marketCaps[0].change24h > 0 ? ' text-green-500' : ' text-red-500')
+                            (selected.change24h > 0 ? ' text-green-500' : ' text-red-500')
                         "
                     >
-                        <Icon :name="marketCaps[0].change24h > 0 ? 'mdi:arrow-up' : 'mdi:arrow-down'" />
-                        {{ marketCaps[0].change24h }}%
+                        <Icon :name="selected.change24h > 0 ? 'mdi:arrow-up' : 'mdi:arrow-down'" />
+                        {{ selected.change24h }}%
                     </p>
                 </div>
                 <div class="grid grid-cols-4 gap-3">
                     <div class="col-span-3">
-                        <div class="card bg-base-100">
+                        <div class="card bg-base-100 mb-3">
                             <div class="card-body p-3">
                                 <div class="flex gap-3">
                                     <button class="btn btn-sm rounded-2xl btn-primary">1日</button>
@@ -746,18 +760,203 @@
                                     <button class="btn btn-sm rounded-2xl bg-base-200 text-base-content border-none hover:bg-base-300">3年</button>
                                     <button class="btn btn-sm rounded-2xl bg-base-200 text-base-content border-none hover:bg-base-300">全期間</button>
                                 </div>
-                                <img
-                                    class=""
-                                    src="https://media.discordapp.net/attachments/1107144302905274458/1112582979034824765/image.png"
-                                    alt=""
-                                />
+                                <div class="grid grid-cols-3">
+                                    <div class="col-span-2">
+                                        <img
+                                            class=""
+                                            src="https://media.discordapp.net/attachments/1107144302905274458/1112582979034824765/image.png"
+                                            alt=""
+                                        />
+                                    </div>
+                                    <div class="col-span-1">
+                                        <ul class="max-w-xs flex flex-col divide-y divide-gray-200 dark:divide-gray-700">
+                                            <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium text-gray-800 dark:text-white">
+                                                <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                                <span>前日終値</span>
+                                                <span class="ml-auto">
+                                                    {{ priceFormat(selected.price) }}
+                                                </span>
+                                            </li>
+                                            <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium text-gray-800 dark:text-white">
+                                                <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                                <span>日次変動</span>
+                                                <span class="ml-auto">
+                                                    {{ selected.change24h }}%
+                                                </span>
+                                            </li>
+                                            <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium text-gray-800 dark:text-white">
+                                                <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                                <span>時価総額</span>
+                                                <span class="ml-auto">
+                                                    {{ priceFormat(selected.marketCap) }}
+                                                </span>
+                                            </li>
+                                            <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium text-gray-800 dark:text-white">
+                                                <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                                <span>ROE</span>
+                                                <span class="ml-auto">
+                                                    {{ selected.roe }}%
+                                                </span>
+                                            </li>
+                                            <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium text-gray-800 dark:text-white">
+                                                <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                                <span>利益変動</span>
+                                                <span class="ml-auto">
+                                                    {{ selected.profitChange }}%
+                                                </span>
+                                            </li>
+                                            <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium text-gray-800 dark:text-white">
+                                                <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                                <span>売上変動</span>
+                                                <span class="ml-auto">
+                                                    {{ selected.salesChange }}%
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card bg-base-100 mb-3">
+                            <div class="card-body p-3">
+                                <div class="card-title text-sm">
+                                    <div class="tabs">
+                                        <a class="tab tab-lifted">損益計算書</a>
+                                        <a class="tab tab-lifted tab-active">貸借対照表</a>
+                                        <a class="tab tab-lifted">キャッシュフロー</a>
+                                    </div>
+                                </div>
+                                <ul class="flex flex-col divide-y divide-gray-200 dark:divide-gray-700">
+                                    <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium text-gray-800 dark:text-white">
+                                        <span>現金及び短期投資</span>
+                                        <span class="ml-auto">
+                                            644.5億円（-2.98%）
+                                        </span>
+                                    </li>
+                                    <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium text-gray-800 dark:text-white">
+                                        <span>総資産</span>
+                                        <span class="ml-auto">
+                                            4,643.78億（+13.05%）
+                                        </span>
+                                    </li>
+                                    <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium text-gray-800 dark:text-white">
+                                        <span>負債総額</span>
+                                        <span class="ml-auto">
+                                            3,098.52億（+11.95%）
+                                        </span>
+                                    </li>
+                                    <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium text-gray-800 dark:text-white">
+                                        <span>純資産</span>
+                                        <span class="ml-auto">
+                                            1,545.26億（-）
+                                        </span>
+                                    </li>
+                                    <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium text-gray-800 dark:text-white">
+                                        <span>発行済み株式</span>
+                                        <span class="ml-auto">
+                                            102.60億（-）
+                                        </span>
+                                    </li>
+                                    <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium text-gray-800 dark:text-white">
+                                        <span>帳簿価格</span>
+                                        <span class="ml-auto">
+                                            7.64（-）
+                                        </span>
+                                    </li>
+                                    <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium text-gray-800 dark:text-white">
+                                        <span>総資産利益率</span>
+                                        <span class="ml-auto">
+                                            2.67%（-）
+                                        </span>
+                                    </li>
+                                    <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium text-gray-800 dark:text-white">
+                                        <span>資本利益率</span>
+                                        <span class="ml-auto">
+                                            3.82%（-）
+                                        </span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                     <div class="col-span-1">
+                        <div class="card bg-base-100 mb-3">
+                            <div class="card-body p-3">
+                                <div class="card-title text-sm">
+                                    AI 予測
+                                </div>
+                                <ul class="max-w-xs flex flex-col divide-y divide-gray-200 dark:divide-gray-700">
+                                    <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium text-gray-800 dark:text-white">
+                                        <span>
+                                            CANSLIM スコア
+                                        </span>
+                                        <span class="ml-auto">
+                                            {{ selected.canslimScore }}
+                                        </span>
+                                    </li>
+                                    <div class="card bg-base-200 mb-3 border-none rounded-md -mt-2">
+                                        <div class="card-body p-2 text-xs">
+                                            この銘柄は多くの点でCANSLIMの条件を満たしています。
+                                            しかし、センチメンタル分析によれば懸念点が認められるため、注意が必要です。
+                                        </div>
+                                    </div>
+                                    <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium text-gray-800 dark:text-white">
+                                        <span>
+                                            チャート評価
+                                        </span>
+                                        <span class="ml-auto">
+                                            {{ selected.aiScore }}
+                                        </span>
+                                    </li>
+                                    <div class="card bg-base-200 mb-3 border-none rounded-md -mt-2">
+                                        <div class="card-body p-2 text-xs">
+                                            この銘柄のチャートは、カップウィズハンドル成立の兆候が認められます。
+                                            しかし、センチメンタル分析によれば懸念点が認められるため、注意が必要です。
+                                        </div>
+                                    </div>
+                                    <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium text-gray-800 dark:text-white">
+                                        <span>
+                                            センチメンタル分析
+                                        </span>
+                                        <span class="ml-auto">
+                                            10
+                                        </span>
+                                    </li>
+                                    <div class="card bg-base-200 mb-3 border-none rounded-md -mt-2">
+                                        <div class="card-body p-2 text-xs">
+                                            この銘柄に対して悪影響を及ぼす可能性のあるツイート、ニュースが多く見られます。
+                                            そのため、注意が必要です。
+                                        </div>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
                         <div class="card bg-base-100">
                             <div class="card-body p-3">
-                                s
+                                <div class="card-title text-sm">
+                                    ニュース
+                                </div>
+                                <ul class="flex flex-col divide-y divide-gray-200 dark:divide-gray-700">
+                                    <li class="py-3 px-4 text-sm font-medium text-gray-800 dark:text-white">
+                                        <p class="text-sm flex gap-2">
+                                            PR TIMES・8時間前
+                                        </p>
+                                        <h3 class="font-medium">
+                                            春はあけぼの。やうやう白くなりゆく山際、少し明かりて、紫だちたる雲の細くたなびきたる。夏は夜。
+                                        </h3>
+                                    </li>
+                                    <li class="py-3 px-4 text-sm font-medium text-gray-800 dark:text-white">
+                                        <p class="text-sm flex gap-2">
+                                            PR TIMES・8時間前
+                                        </p>
+                                        <h3 class="font-medium">
+                                            春はあけぼの。やうやう白くなりゆく山際、少し明かりて、紫だちたる雲の細くたなびきたる。夏は夜。
+                                        </h3>
+                                    </li>
+                                    <div class="btn btn-ghost btn-sm btn-block border-none">
+                                        もっと見る
+                                    </div>
+                                </ul>
                             </div>
                         </div>
                     </div>
